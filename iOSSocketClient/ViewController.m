@@ -18,7 +18,7 @@
 #import "AudioConstant.h"
 
 
-#define BUFFER_SIZE 256
+#define BUFFER_SIZE 1024
 
 @interface ViewController (){
     int toServerSocket;
@@ -247,7 +247,7 @@ static void AudioPlayerAQInputCallback(void *input, AudioQueueRef outQ, AudioQue
 -(void) sendToServer:(NSString*) message{
     NSLog(@"send message to server...");
     
-    char mychar[10240];
+    char mychar[BUFFER_SIZE];
     strcpy(mychar,(char *)[message UTF8String]);
 
     
@@ -258,7 +258,7 @@ static void AudioPlayerAQInputCallback(void *input, AudioQueueRef outQ, AudioQue
 //    [ message cStringUsingEncoding:NSUTF8StringEncoding];
     
     //发送buffer中的字符串到new_server_socket,实际是给客户端
-    send(toServerSocket,mychar,1024,0);
+    send(toServerSocket,mychar,BUFFER_SIZE,0);
 }
 
 - (void)didReceiveMemoryWarning {
